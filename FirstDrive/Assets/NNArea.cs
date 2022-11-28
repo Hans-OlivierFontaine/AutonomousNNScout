@@ -15,8 +15,8 @@ public class NNArea : Agent
         public float car = -0.001f;
     }
 
-    public float movespeed = 30f;
-    public float turnspeed = 100f;
+    public float movespeed = 3f;
+    public float turnspeed = 1f;
     public RewardInfo rwd = new RewardInfo();
     private Rigidbody rigidbody = null;
     private Vector3 recall_position;
@@ -35,6 +35,7 @@ public class NNArea : Agent
         bnd = this.GetComponent<MeshRenderer>().bounds;
 
         recall_position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        //recall_position = new Vector3(45, 0.5f, 45);
         recall_rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z, this.transform.rotation.w);
     }
 
@@ -47,6 +48,7 @@ public class NNArea : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        System.Console.WriteLine("ActionReceived");
         if (isWheelsDown() == false)
             return;
         
@@ -101,7 +103,7 @@ public class NNArea : Agent
         if (collision.gameObject.CompareTag("wallBlack") == true || collision.gameObject.CompareTag("wallColor") == true)
         {
             AddReward(rwd.barrier);
-        }else if (collision.gameObject.CompareTag("Car") == true){
+        }else if (collision.gameObject.CompareTag("car") == true){
             AddReward(rwd.car);
         }
     }
